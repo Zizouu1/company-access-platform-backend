@@ -49,7 +49,7 @@ export class AdminService {
 
       for (const row of rows) {
         const emp = new Employee();
-        emp.id = +row.Matricule;
+        emp.id = row.Matricule;
         emp.fullname = row.NomPrenom;
         emp.fonction = row.fonction;
         emp.departement = row.departement;

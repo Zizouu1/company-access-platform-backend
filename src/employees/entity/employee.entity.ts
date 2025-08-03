@@ -8,9 +8,9 @@ import {
 @Entity('Employees')
 export class Employee {
   @PrimaryColumn()
-  id: number;
+  id: string;
 
-  @Column({ unique: true })
+  @Column()
   fullname: string;
 
   @Column()

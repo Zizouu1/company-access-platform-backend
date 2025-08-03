@@ -26,18 +26,18 @@ export class EmployeesController {
     return await this.employeeservice.findAll();
   }
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Employee | null> {
+  async findOne(@Param('id') id: string): Promise<Employee | null> {
     return await this.employeeservice.findOne(id);
   }
   @Patch(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateemployeedto: UpdateEmployeeDto
   ): Promise<Employee | null> {
     return await this.employeeservice.update(id, updateemployeedto);
   }
   @Delete(':id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: string) {
     return await this.employeeservice.remove(id);
   }
 }

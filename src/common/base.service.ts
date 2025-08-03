@@ -1,14 +1,14 @@
 import { Repository, FindOptionsWhere, DeepPartial } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
-export class BaseService<T extends { id: number }> {
+export class BaseService<T extends { id: string }> {
   constructor(protected readonly repository: Repository<T>) {}
 
   async findAll(): Promise<T[]> {
     return await this.repository.find();
   }
 
-  async findOne(id: number): Promise<T | null> {
+  async findOne(id: string): Promise<T | null> {
     return await this.repository.findOneBy({ id } as FindOptionsWhere<T>);
   }
 
@@ -17,12 +17,12 @@ export class BaseService<T extends { id: number }> {
     return await this.repository.save(entity);
   }
 
-  async update(id: number, data: QueryDeepPartialEntity<T>): Promise<T | null> {
+  async update(id: string, data: QueryDeepPartialEntity<T>): Promise<T | null> {
     await this.repository.update(id, data);
     return this.findOne(id);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.repository.delete(id);
   }
 }
