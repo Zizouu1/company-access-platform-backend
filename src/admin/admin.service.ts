@@ -52,7 +52,7 @@ export class AdminService {
         emp.id = row.Matricule;
         emp.fullname = row.NomPrenom;
         emp.fonction = row.fonction;
-        emp.departement = row.departement;
+        emp.site = row.site;
 
         const saved: Employee = await this.empRepo.save(emp);
         results.push(saved);

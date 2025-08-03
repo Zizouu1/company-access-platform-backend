@@ -5,19 +5,28 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-@Entity('Employees')
-export class Employee {
+@Entity('delay-pec')
+export class Delay {
+  @Column({ type: 'date' })
+  dateR: string;
+
+  @Column({ type: 'time' })
+  time: string;
+
   @PrimaryColumn()
   id: string;
 
   @Column()
-  fullname: string;
+  nom: string;
 
   @Column()
-  fonction: string;
+  prenom: string;
 
   @Column()
   site: string;
+
+  @Column()
+  service: string;
 
   @CreateDateColumn()
   created_at: Date;

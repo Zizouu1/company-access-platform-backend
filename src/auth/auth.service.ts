@@ -20,6 +20,7 @@ export class AuthService {
       findUser &&
       (await bcrypt.compare(authDto.password, findUser.password))
     ) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = findUser;
       return result;
     }

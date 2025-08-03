@@ -7,8 +7,6 @@ import { EmployeesModule } from './employees/employees.module';
 import { VisitorManagerModule } from './visitor-manager/visitor-manager.module';
 import { FollowAdministratorModule } from './follow-administrator/follow-administrator.module';
 import { DelayPecModule } from './delay-pec/delay-pec.module';
-import { DelayPecAcModule } from './delay-pec-ac/delay-pec-ac.module';
-import { DelayPecPlusModule } from './delay-pec-plus/delay-pec-plus.module';
 import { AdminModule } from './admin/admin.module';
 
 @Module({
@@ -36,8 +34,6 @@ import { AdminModule } from './admin/admin.module';
     VisitorManagerModule,
     FollowAdministratorModule,
     DelayPecModule,
-    DelayPecAcModule,
-    DelayPecPlusModule,
     AdminModule,
   ],
 })
