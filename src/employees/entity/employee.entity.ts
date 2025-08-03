@@ -13,15 +13,15 @@ export class Employee {
   @Column({ unique: true })
   fullname: string;
 
-  @CreateDateColumn()
-  created_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
-
   @Column()
   fonction: string;
 
   @Column()
   departement: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

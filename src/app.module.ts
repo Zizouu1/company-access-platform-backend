@@ -9,6 +9,7 @@ import { FollowAdministratorModule } from './follow-administrator/follow-adminis
 import { DelayPecModule } from './delay-pec/delay-pec.module';
 import { DelayPecAcModule } from './delay-pec-ac/delay-pec-ac.module';
 import { DelayPecPlusModule } from './delay-pec-plus/delay-pec-plus.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { DelayPecPlusModule } from './delay-pec-plus/delay-pec-plus.module';
     DelayPecModule,
     DelayPecAcModule,
     DelayPecPlusModule,
+    AdminModule,
   ],
 })
 export class AppModule {}
