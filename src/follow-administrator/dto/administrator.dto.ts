@@ -1,6 +1,6 @@
 import { IsDateString, IsMilitaryTime, IsString } from 'class-validator';
 
-export class CreateVisitorDto {
+export class CreateAdministratorDto {
   @IsDateString()
   dateR: string;
 
