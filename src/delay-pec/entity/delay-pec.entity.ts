@@ -1,10 +1,13 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { Employee } from '../../employees/entity/employee.entity';
 @Entity('delay-pec')
 export class Delay {
   @Column({ type: 'date' })
@@ -13,17 +16,12 @@ export class Delay {
   @Column({ type: 'time' })
   time: string;
 
-  @PrimaryColumn()
-  id: string;
+  @PrimaryGeneratedColumn()
+  idDelay: string;
 
-  @Column()
-  nom: string;
-
-  @Column()
-  prenom: string;
-
-  @Column()
-  site: string;
+  @ManyToOne(() => Employee, (employee) => employee.delays, { eager: true })
+  @JoinColumn({ name: 'employee_id' })
+  employee: Employee;
 
   @Column()
   service: string;

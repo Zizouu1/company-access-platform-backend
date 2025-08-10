@@ -1,23 +1,22 @@
-import { IsDateString, IsMilitaryTime, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsMilitaryTime,
+  IsString,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class CreateDelayDto {
+  @IsNotEmpty()
   @IsDateString()
   dateR: string;
 
+  @IsNotEmpty()
   @IsMilitaryTime()
   time: string;
 
+  @IsNotEmpty()
   @IsString()
-  id: string;
-
-  @IsString()
-  nom: string;
-
-  @IsString()
-  prenom: string;
-
-  @IsString()
-  site: string;
+  employee_id: string;
 
   @IsString()
   service: string;

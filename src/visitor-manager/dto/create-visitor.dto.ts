@@ -1,13 +1,14 @@
-import { IsDate, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsDateString, IsMilitaryTime, IsString } from 'class-validator';
 
 export class CreateVisitorDto {
-  @Type(() => Date)
-  @IsDate()
-  date: Date;
+  @IsDateString()
+  dateA: string;
+
+  @IsMilitaryTime()
+  time: string;
 
   @IsString()
-  cin: string;
+  id: string;
 
   @IsString()
   fullname: string;

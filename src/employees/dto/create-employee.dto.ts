@@ -4,9 +4,9 @@ export class CreateEmployeeDto {
   @IsString()
   id: string;
   @IsString()
-  fullname: string;
+  nom: string;
   @IsString()
-  departement: string;
+  prenom: string;
   @IsString()
-  fonction: string;
+  site: string;
 }

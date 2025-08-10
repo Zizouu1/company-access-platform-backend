@@ -4,20 +4,29 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Delay } from '../../delay-pec/entity/delay-pec.entity';
+import { Administrator } from '../../follow-administrator/entity/administrator.entity';
 @Entity('Employees')
 export class Employee {
   @PrimaryColumn()
   id: string;
 
   @Column()
-  fullname: string;
+  nom: string;
 
   @Column()
-  fonction: string;
+  prenom: string;
 
   @Column()
   site: string;
+
+  @OneToMany(() => Delay, (delay) => delay.employee)
+  delays: Delay[];
+
+  @OneToMany(() => Administrator, (admin) => admin.employee)
+  administratorDelays: Administrator[];
 
   @CreateDateColumn()
   created_at: Date;

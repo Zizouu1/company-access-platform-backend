@@ -12,6 +12,7 @@ export class AuthService {
     @InjectRepository(User) private UserRepository: Repository<User>,
     private jwtService: JwtService
   ) {}
+
   async validateUser(authDto: LoginDto) {
     const findUser = await this.UserRepository.findOneBy({
       username: authDto.username,
@@ -55,6 +56,7 @@ export class AuthService {
     };
     return {
       access_token: this.jwtService.sign(payload),
+      role: user.role,
     };
   }
 }

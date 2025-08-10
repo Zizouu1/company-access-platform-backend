@@ -7,8 +7,11 @@ import {
 } from 'typeorm';
 @Entity('Visitors')
 export class Visitor {
-  @Column({ type: 'timestamp' })
-  date: Date;
+  @Column({ type: 'date' })
+  dateA: string;
+
+  @Column({ type: 'time' })
+  time: string;
 
   @PrimaryColumn()
   id: string;
