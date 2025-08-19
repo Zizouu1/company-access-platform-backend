@@ -13,13 +13,21 @@ export class Delay {
   @Column({ type: 'date' })
   dateR: string;
 
-  @Column({ type: 'time' })
+  @Column({
+    type: 'time',
+    transformer: {
+      to: (value: string) => value,
+      from: (value: string) => value,
+    },
+  })
   time: string;
 
   @PrimaryGeneratedColumn()
-  idDelay: string;
+  id: string;
 
-  @ManyToOne(() => Employee, (employee) => employee.delays, { eager: true })
+  @ManyToOne(() => Employee, (employee) => employee.administratorDelays, {
+    eager: true,
+  })
   @JoinColumn({ name: 'employee_id' })
   employee: Employee;
 

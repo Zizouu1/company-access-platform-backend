@@ -7,5 +7,5 @@ export class CreateUserDto {
   username: string;
   @IsString()
   password: string;
-  role?: Role;
+  role: Role;
 }

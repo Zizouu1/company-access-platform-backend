@@ -1,9 +1,4 @@
-import {
-  IsDateString,
-  IsMilitaryTime,
-  IsString,
-  IsNotEmpty,
-} from 'class-validator';
+import { IsDateString, Matches, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateAdministratorDto {
   @IsNotEmpty()
@@ -11,10 +6,12 @@ export class CreateAdministratorDto {
   dateR: string;
 
   @IsNotEmpty()
-  @IsMilitaryTime()
+  @Matches(/^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/, {
+    message: 'Time must be in HH:MM or HH:MM:SS format',
+  })
   time: string;
 
   @IsNotEmpty()
   @IsString()
-  employee_id: string;
+  employeeId: string;
 }

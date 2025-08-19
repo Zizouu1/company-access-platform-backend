@@ -14,24 +14,21 @@ export class AdminService {
   ) {}
 
   async importEmployeesFromCSV(filePath: string): Promise<any> {
-    const rows: any[] = [];
+    if (!filePath || !fs.existsSync(filePath)) {
+      throw new Error('File path is invalid or file does not exist');
+    }
 
     return new Promise((resolve, reject) => {
+      const rows: any[] = [];
+
       fs.createReadStream(filePath)
         .pipe(csv())
-        .on('data', (row) => {
-          rows.push(row);
-        })
+        .on('data', (row) => rows.push(row))
         .on('end', () => {
-          this.handleCSVRows(
-            rows as EmployeeCSVRow[],
-            filePath,
-            resolve,
-            reject
-          )
-            .then(() => {})
-            .catch((error: Error) =>
-              reject(new Error(`Error handling CSV rows: ${error?.message}`))
+          this.handleCSVRows(rows as EmployeeCSVRow[], filePath)
+            .then((result) => resolve(result))
+            .catch((error) =>
+              reject(error instanceof Error ? error : new Error(String(error)))
             );
         })
         .on('error', (error) => reject(error));
@@ -40,29 +37,58 @@ export class AdminService {
 
   private async handleCSVRows(
     rows: EmployeeCSVRow[],
-    filePath: string,
-    resolve: (value: any) => void,
-    reject: (reason?: any) => void
-  ) {
+    filePath: string
+  ): Promise<any> {
+    const results: Employee[] = [];
+    let duplicates = 0;
+    let errors = 0;
+
     try {
-      const results: Employee[] = [];
-
       for (const row of rows) {
-        const emp = new Employee();
-        emp.id = row.Matricule;
-        emp.fullname = row.NomPrenom;
-        emp.fonction = row.fonction;
-        emp.site = row.site;
+        try {
+          const existing = await this.empRepo.findOne({
+            where: { id: row.Matricule },
+          });
 
-        const saved: Employee = await this.empRepo.save(emp);
-        results.push(saved);
+          if (existing) {
+            duplicates++;
+            continue;
+          }
+
+          const emp = new Employee();
+          emp.id = row.Matricule;
+          emp.nom = row.Nom;
+          emp.prenom = row.Prenom;
+          emp.site = row.Site;
+
+          const saved = await this.empRepo.save(emp);
+          results.push(saved);
+        } catch (rowError) {
+          console.error(`Error processing row ${row.Matricule}:`, rowError);
+          errors++;
+        }
       }
 
-      fs.unlinkSync(filePath);
-      resolve({ inserted: results.length });
+      // Clean up the file
+      try {
+        fs.unlinkSync(filePath);
+      } catch (unlinkError) {
+        console.error('Error deleting file:', unlinkError);
+      }
+
+      return {
+        inserted: results.length,
+        duplicates,
+        errors,
+      };
     } catch (error) {
-      console.error('Error during bulk insert:', error);
-      reject(error);
+      // Clean up the file even if there's an error
+      try {
+        fs.unlinkSync(filePath);
+      } catch (unlinkError) {
+        console.error('Error deleting file:', unlinkError);
+      }
+      throw error;
     }
   }
 }

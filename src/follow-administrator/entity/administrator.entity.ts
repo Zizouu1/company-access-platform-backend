@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
@@ -13,11 +13,17 @@ export class Administrator {
   @Column({ type: 'date' })
   dateR: string;
 
-  @Column({ type: 'time' })
+  @Column({
+    type: 'time',
+    transformer: {
+      to: (value: string) => value,
+      from: (value: string) => value,
+    },
+  })
   time: string;
 
-  @PrimaryColumn()
-  idAdmin: string;
+  @PrimaryGeneratedColumn()
+  id: string;
 
   @ManyToOne(() => Employee, (employee) => employee.administratorDelays, {
     eager: true,

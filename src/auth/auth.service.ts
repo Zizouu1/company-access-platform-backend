@@ -28,7 +28,7 @@ export class AuthService {
     return null;
   }
   async register(authDto: RegisterDto) {
-    const { username, password, role } = authDto;
+    const { id, username, password, role } = authDto;
     const existingUser = await this.UserRepository.findOneBy({
       username: authDto.username,
     });
@@ -36,6 +36,7 @@ export class AuthService {
       throw new Error('User already exists');
     }
     const user = this.UserRepository.create({
+      id,
       username,
       password,
       role,

@@ -8,8 +8,10 @@ export class LoginDto {
 }
 export class RegisterDto {
   @IsString()
+  id: string;
+  @IsString()
   username: string;
   @IsString()
   password: string;
-  role?: Role;
+  role: Role;
 }
