@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BaseService } from 'src/common/base.service';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -21,12 +17,8 @@ export class DelayPecService extends BaseService<Delay> {
   ) {
     super(delayRepository);
   }
-  async create(data: Partial<Delay>): Promise<Delay> {
-    const employeeId: string =
-      data.employee?.id || (data as { employee_id: string }).employee_id;
-    if (!employeeId) {
-      throw new BadRequestException('employee_id is required');
-    }
+  async create(data: CreateDelayDto): Promise<Delay> {
+    const { employeeId, dateR, time, service } = data;
 
     const employee = await this.employeeRepository.findOne({
       where: { id: employeeId },
@@ -34,9 +26,16 @@ export class DelayPecService extends BaseService<Delay> {
     if (!employee) {
       throw new NotFoundException('Employee not found');
     }
+    const formattedTime = time.length === 5 ? `${time}:00` : time;
 
-    data.employee = employee;
-    return super.create(data);
+    const delay = this.delayRepository.create({
+      dateR,
+      time: formattedTime,
+      employee,
+      service,
+    });
+
+    return this.delayRepository.save(delay);
   }
   async update(id: string, data: CreateDelayDto): Promise<Delay> {
     const { employeeId, dateR, time, service } = data;
