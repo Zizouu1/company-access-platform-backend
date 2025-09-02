@@ -31,9 +31,6 @@ export class Delay {
   @JoinColumn({ name: 'employee_id' })
   employee: Employee;
 
-  @Column()
-  service: string;
-
   @CreateDateColumn()
   created_at: Date;
 

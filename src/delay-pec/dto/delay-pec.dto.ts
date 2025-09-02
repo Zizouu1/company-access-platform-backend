@@ -14,7 +14,4 @@ export class CreateDelayDto {
   @IsNotEmpty()
   @IsString()
   employeeId: string;
-
-  @IsString()
-  service: string;
 }

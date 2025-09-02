@@ -69,7 +69,6 @@ export class AdminService {
         }
       }
 
-      // Clean up the file
       try {
         fs.unlinkSync(filePath);
       } catch (unlinkError) {
@@ -82,7 +81,6 @@ export class AdminService {
         errors,
       };
     } catch (error) {
-      // Clean up the file even if there's an error
       try {
         fs.unlinkSync(filePath);
       } catch (unlinkError) {

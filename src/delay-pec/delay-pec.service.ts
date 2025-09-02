@@ -18,7 +18,7 @@ export class DelayPecService extends BaseService<Delay> {
     super(delayRepository);
   }
   async create(data: CreateDelayDto): Promise<Delay> {
-    const { employeeId, dateR, time, service } = data;
+    const { employeeId, dateR, time } = data;
 
     const employee = await this.employeeRepository.findOne({
       where: { id: employeeId },
@@ -32,13 +32,12 @@ export class DelayPecService extends BaseService<Delay> {
       dateR,
       time: formattedTime,
       employee,
-      service,
     });
 
     return this.delayRepository.save(delay);
   }
   async update(id: string, data: CreateDelayDto): Promise<Delay> {
-    const { employeeId, dateR, time, service } = data;
+    const { employeeId, dateR, time } = data;
     const formattedTime = time.length === 5 ? `${time}:00` : time;
     const delay = await this.delayRepository.findOne({
       where: { id },
@@ -58,7 +57,6 @@ export class DelayPecService extends BaseService<Delay> {
     }
     if (dateR) delay.dateR = dateR;
     if (time) delay.time = formattedTime;
-    if (service) delay.service = service;
     return this.delayRepository.save(delay);
   }
   async findAll(): Promise<Delay[]> {
